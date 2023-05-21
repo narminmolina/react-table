@@ -1,4 +1,11 @@
-export const App = () => {
+import { useContext } from 'react';
 
-	return<div>Hello world</div>;
+import { Table } from 'components/Table';
+import { Login } from 'components/Login';
+import { LoginContext } from 'contexts/LoginContext';
+
+export const App = () => {
+	const loginContext = useContext(LoginContext);
+
+	return loginContext?.isUserLoggedIn ? <Table /> : <Login />;
 };

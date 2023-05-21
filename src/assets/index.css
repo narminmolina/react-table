@@ -14,6 +14,9 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#root {
+	margin-inline: auto;
+}
 
 
 body {
@@ -24,3 +27,20 @@ body {
   min-height: 100vh;
 }
 
+
+.login-form {
+	width: 400px;
+	margin-inline: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	align-items: flex-start;
+}
+
+.login-form label {
+	color: #fff;
+}
+
+.login-form .mantine-TextInput-root {
+	width: 100%;
+}
