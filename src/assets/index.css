@@ -44,3 +44,8 @@ body {
 .login-form .mantine-TextInput-root {
 	width: 100%;
 }
+.table-top-toolbar-custom-actions {
+	display: flex;
+	gap: 16px;
+	padding: 4px;
+}

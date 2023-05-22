@@ -14,6 +14,7 @@ app.get('/api/table-data', (req, res) => {
 	const size = Number(req.query.size);
 	const slicedData = data.slice(start, start + size);
 
+
 	res.json({
 		data: slicedData,
 		meta: {

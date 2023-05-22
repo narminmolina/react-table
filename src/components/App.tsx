@@ -5,7 +5,7 @@ import { Login } from 'components/Login';
 import { LoginContext } from 'contexts/LoginContext';
 
 export const App = () => {
-	const loginContext = useContext(LoginContext);
+	const { isUserLoggedIn } = useContext(LoginContext);
 
-	return loginContext?.isUserLoggedIn ? <Table /> : <Login />;
+	return isUserLoggedIn ? <Table /> : <Login />;
 };

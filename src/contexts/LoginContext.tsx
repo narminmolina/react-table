@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState, useMemo, useCallback } from 'react';
+import { ReactNode, createContext, useState } from 'react';
 
 interface LoginContextParams {
 	isUserLoggedIn: boolean;
@@ -9,12 +9,17 @@ interface LoginProviderProps {
 	children: ReactNode;
 }
 
-export const LoginContext = createContext<LoginContextParams | null>(null);
+export const LoginContext = createContext<LoginContextParams>({
+	isUserLoggedIn: false,
+	login: () => null,
+	logout: () => null,
+});
 
 export const LoginProvider = ({ children }: LoginProviderProps) => {
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(() =>
 		JSON.parse(localStorage.getItem('isUserLoggedIn') || 'false')
 	);
+
 	const login = () => {
 		setIsUserLoggedIn(true);
 		localStorage.setItem('isUserLoggedIn', 'true');

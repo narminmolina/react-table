@@ -1,11 +1,15 @@
-import { Button, TextInput } from '@mantine/core';
-import { LoginContext } from 'contexts/LoginContext';
 import { useContext } from 'react';
+import { Button, TextInput } from '@mantine/core';
 
-const hardCodedUsers = [{ email: 'user@gmail.com', password: '123456' }];
+import { LoginContext } from 'contexts/LoginContext';
+
+const hardCodedUsers = [
+	{ email: 'user@gmail.com', password: '123456' },
+	{ email: 'test@gmail.com', password: '123456' },
+];
 
 export const Login = () => {
-	const loginContext = useContext(LoginContext);
+	const { login } = useContext(LoginContext);
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -18,9 +22,7 @@ export const Login = () => {
 			return;
 		}
 
-		loginContext?.login();
-
-		console.log('logged in', loginContext?.isUserLoggedIn);
+		login();
 	};
 
 	return (
