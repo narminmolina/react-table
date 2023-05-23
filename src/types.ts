@@ -12,6 +12,6 @@ export interface ApiResponse {
 	meta: {
 		currentPage: number;
 		pageSize: number;
-		totalRowCount: number;
+		totalItemCount: number;
 	};
 }

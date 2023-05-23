@@ -8,6 +8,8 @@ import { columns } from 'constants';
 import { fetchTableData } from 'utils';
 import { useTopToolbarCustomActions } from 'hooks/useTopToolbarCustomActions';
 
+// NOTE: The number of items to render above and below the visible area.
+// More info can be found here: https://tanstack.com/virtual/v3/docs/api/virtualizer#overscan
 const rowVirtualizerProps = { overscan: 25 };
 const bottomToolbarProps = { style: { display: 'flex', alignItems: 'center' } };
 
@@ -26,20 +28,20 @@ export const Table = () => {
 	});
 
 	const flatData = useMemo(() => data?.pages.flatMap(page => page.data) ?? [], [data]);
-	const totalFetched = flatData.length;
-	const totalRowCount = data?.pages.at(0)?.meta.totalRowCount ?? 0;
+	const totalFetchedItems = flatData.length;
+	const totalItemCount = data?.pages.at(0)?.meta.totalItemCount ?? 0;
 
 	const fetchMoreOnBottomReached = useCallback(
 		(containerRefElement: HTMLDivElement | null) => {
 			if (containerRefElement) {
 				const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
 				// NOTE: Once the user has scrolled within 400px of the bottom of the table, fetch more data if we can.
-				if (scrollHeight - scrollTop - clientHeight < 400 && !isFetching && totalFetched < totalRowCount) {
+				if (scrollHeight - scrollTop - clientHeight < 400 && !isFetching && totalFetchedItems < totalItemCount) {
 					fetchNextPage();
 				}
 			}
 		},
-		[fetchNextPage, isFetching, totalFetched, totalRowCount]
+		[fetchNextPage, isFetching, totalFetchedItems, totalItemCount]
 	);
 
 	const toolbarAlertBannerProps = useMemo(
@@ -59,10 +61,10 @@ export const Table = () => {
 	const renderBottomToolbarCustomActions = useCallback(
 		() => (
 			<Text>
-				Fetched {totalFetched} of {totalRowCount} total rows.
+				Fetched {totalFetchedItems} of {totalItemCount} total rows.
 			</Text>
 		),
-		[totalRowCount, totalFetched]
+		[totalItemCount, totalFetchedItems]
 	);
 
 	// NOTE: This is for scrolling to top of table when sorting changes.

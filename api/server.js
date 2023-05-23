@@ -1,10 +1,17 @@
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import cors from 'cors';
 import express from 'express';
 
 const app = express();
 
-const fakerData = fs.readFileSync('fakerData.json', 'utf8');
+const currentFilePath = fileURLToPath(import.meta.url);
+const currentDirPath = dirname(currentFilePath);
+
+const fakerDataPath = join(currentDirPath, '..', 'api', 'fakerData.json');
+
+const fakerData = fs.readFileSync(fakerDataPath, 'utf8');
 const data = JSON.parse(fakerData);
 
 app.use(cors());
@@ -14,13 +21,12 @@ app.get('/api/table-data', (req, res) => {
 	const size = Number(req.query.size);
 	const slicedData = data.slice(start, start + size);
 
-
 	res.json({
 		data: slicedData,
 		meta: {
-			totalRowCount: data.length,
-			currentPage: Math.floor(start / size) + 1,
+			totalItemCount: data.length,
 			pageSize: slicedData.length,
+			currentPage: Math.floor(start / size) + 1,
 		},
 	});
 });

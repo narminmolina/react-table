@@ -1,4 +1,3 @@
-import * as dayjs from 'dayjs';
 import { MRT_ColumnDef } from 'mantine-react-table';
 
 import { TableData } from 'types';
@@ -21,6 +20,7 @@ export const initialColumnOrder = [
 // Because mantine-react-table component keeps same reference to initialColumnOrder array and mutates it's value.
 export const defaultColumnOrder = storedColumnOrder ? JSON.parse(storedColumnOrder) : [...initialColumnOrder];
 export const defaultSorting = storedSorting ? JSON.parse(storedSorting) : [];
+const dateTimeFormatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 export const columns: MRT_ColumnDef<TableData>[] = [
 	{ accessorKey: 'id', header: 'ID', maxSize: 130 },
@@ -37,7 +37,7 @@ export const columns: MRT_ColumnDef<TableData>[] = [
 		id: 'registeredAt',
 		header: 'Registered At',
 		minSize: 200,
-		accessorFn: row => dayjs(row.registeredAt).format('MMMM D, YYYY'),
+		accessorFn: row => new Intl.DateTimeFormat('en', dateTimeFormatOptions).format(new Date(row.registeredAt)),
 	},
 	{
 		id: 'daysSinceRegistration',
